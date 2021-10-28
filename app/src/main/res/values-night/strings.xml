@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">AMA School</string>
+<string name="no_internet">No Internet</string>
+<string name="retry">Retry</string>
+<string name="splash_screen_image">Splash Screen Image</string>
+<string name="school_name">Anshu Memorial Academy</string>
+</resources>
