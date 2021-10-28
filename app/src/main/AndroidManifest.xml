@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AMASchool"
         tools:ignore="AllowBackup">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

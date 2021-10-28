@@ -62,14 +62,6 @@ public class MainActivity extends AppCompatActivity {
 //        settings.setEnableSmoothTransition(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-//        webView.setOnKeyListener((v, keyCode, event) -> {
-//            if (keyCode== KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_UP && webView.canGoBack()){
-//                handler.sendEmptyMessage(1);
-//                return true;
-//            }
-//            return false;
-//        });
-
         loadWebPage();
 
 //        refreshBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,17 +107,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean isConnected(){
-        //    both code group is working use any group
 
-        //     group A
         ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-        // group B
-//        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
         return wifi.isConnected() || mobile.isConnected();
     }
@@ -186,15 +171,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class myWebChromeClient extends WebChromeClient {
+    private static class myWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-//            progressBar.setVisibility(View.VISIBLE);
-//            progressBar.setProgress(newProgress);
-//
-//            if (newProgress == 100){
-//                progressBar.setVisibility(View.GONE);
-//            }
         }
     }
 }

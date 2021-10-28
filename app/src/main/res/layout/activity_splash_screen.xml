@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
         android:contentDescription="@string/splash_screen_image"
-        android:src="@drawable/ama512min" />
+        android:src="@drawable/ic_ama_blue_white_13kb" />
 
     <TextView
         android:layout_width="wrap_content"
