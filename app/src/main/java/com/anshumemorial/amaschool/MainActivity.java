@@ -44,43 +44,25 @@ public class MainActivity extends AppCompatActivity {
         noInternetLayout = findViewById(R.id.no_internet_layout);
         Button refreshBtn = findViewById(R.id.refresh_btn);
 
-
+//        webView settings
         webView.setWebViewClient(new myWebViewClient());
         webView.setWebChromeClient(new myWebChromeClient());
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAppCacheEnabled(true);
 
-        // Improve loading speed
-//        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+//         Improve loading speed
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         settings.setUseWideViewPort(true);
-//        settings.setSavePassword(true);
         settings.setSaveFormData(true);
-//        settings.setEnableSmoothTransition(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-
+        /* load web page function when app load */
         loadWebPage();
-
-//        refreshBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadWebPage();
-//            }
-//        });
-//
-        //swipeRefreshLayout.setOnRefreshListener(() -> webView.reload());
-//        swipeRefreshLayout.setOnRefreshListener(() -> {
-//            loadWebPage();
-//        });
-
-//        below code is lambda code of above code
+        /* load web page on click refresh button or swipe layout */
         refreshBtn.setOnClickListener(v -> loadWebPage());
         swipeRefreshLayout.setOnRefreshListener(this::loadWebPage);
-
-
     }
 
     private void loadWebPage() {
