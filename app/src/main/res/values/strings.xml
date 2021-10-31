@@ -5,4 +5,5 @@
     <string name="splash_screen_image">Splash Screen Image</string>
     <string name="school_name">Anshu Memorial Academy</string>
     <string name="developer_details">Developed by Satish Kr. Sharma</string>
+    <string name="check_internet">Please check internet connection.</string>
 </resources>

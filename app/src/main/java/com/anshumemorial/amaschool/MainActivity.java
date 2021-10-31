@@ -26,10 +26,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+//    variables declaration
     private WebView webView;
     private ProgressBar progressBar;
+    private ProgressBar horizontalProgressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout noInternetLayout;
+
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -37,12 +40,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        variables assignment
         webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
+        horizontalProgressBar = findViewById(R.id.horizontal_progressbar);
+        horizontalProgressBar.setMax(100);
         swipeRefreshLayout = findViewById(R.id
                 .swipeRefresh);
         noInternetLayout = findViewById(R.id.no_internet_layout);
+//        local variables declaration with assignment
         Button refreshBtn = findViewById(R.id.refresh_btn);
+//        ImageView goToRegPage = findViewById(R.id.contact);
+//        go to register page
+//        goToRegPage.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+//            startActivity(intent);
+//        });
 
 //        webView settings
         webView.setWebViewClient(new myWebViewClient());
@@ -52,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAppCacheEnabled(true);
-
 //         Improve loading speed
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setUseWideViewPort(true);
@@ -63,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         /* load web page on click refresh button or swipe layout */
         refreshBtn.setOnClickListener(v -> loadWebPage());
         swipeRefreshLayout.setOnRefreshListener(this::loadWebPage);
+
     }
 
     private void loadWebPage() {
@@ -73,9 +86,10 @@ public class MainActivity extends AppCompatActivity {
         }else{
             webView.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
+            horizontalProgressBar.setVisibility(View.GONE);
             noInternetLayout.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(this, "Please check internet connection.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.check_internet, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -141,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 //            below code are not need because it handle by another place
             progressBar.setVisibility(View.VISIBLE);
+            horizontalProgressBar.setVisibility(View.GONE);
             swipeRefreshLayout.setRefreshing(true);
             super.onPageStarted(view, url, favicon);
         }
@@ -148,14 +163,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             progressBar.setVisibility(View.GONE);
+            horizontalProgressBar.setVisibility(View.GONE);
             swipeRefreshLayout.setRefreshing(false);
             super.onPageFinished(view, url);
         }
     }
 
-    private static class myWebChromeClient extends WebChromeClient {
+    private class myWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
+            horizontalProgressBar.setProgress(newProgress);
+            if(newProgress == 100){
+                horizontalProgressBar.setVisibility(View.GONE);
+            }else {
+                horizontalProgressBar.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

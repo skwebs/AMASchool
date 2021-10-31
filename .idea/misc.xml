@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/drawable/ic_ama_blue_white_13kb.xml" value="0.10989583333333333" />
+        <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/drawable/ic_ama_primary_transparent_sq_logo_opt_min.xml" value="0.22" />
         <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/drawable/ic_ama_sq_logo_min.xml" value="0.10625" />
+        <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/drawable/wifi_off.xml" value="0.21354166666666666" />
+        <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/layout/activity_register.xml" value="0.15" />
         <entry key="..\:/Android/AMA/AMASchool/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="..\:/cloned/AMASchoool/app/src/main/res/drawable/ic_ama_blue_white_13kb.xml" value="0.1125" />
         <entry key="..\:/cloned/AMASchoool/app/src/main/res/drawable/wifi_off.xml" value="0.1125" />
