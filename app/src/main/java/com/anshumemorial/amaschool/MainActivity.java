@@ -50,12 +50,6 @@ public class MainActivity extends AppCompatActivity {
         noInternetLayout = findViewById(R.id.no_internet_layout);
 //        local variables declaration with assignment
         Button refreshBtn = findViewById(R.id.refresh_btn);
-//        ImageView goToRegPage = findViewById(R.id.contact);
-//        go to register page
-//        goToRegPage.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-//            startActivity(intent);
-//        });
 
 //        webView settings
         webView.setWebViewClient(new myWebViewClient());
@@ -70,20 +64,29 @@ public class MainActivity extends AppCompatActivity {
         settings.setUseWideViewPort(true);
         settings.setSaveFormData(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        /* load web page function when app load */
-        loadWebPage();
-        /* load web page on click refresh button or swipe layout */
-        refreshBtn.setOnClickListener(v -> loadWebPage());
-        swipeRefreshLayout.setOnRefreshListener(this::loadWebPage);
 
+        /* load web page function when app load */
+        loadPage();
+
+        refreshBtn.setOnClickListener(v -> loadPage());
+
+        swipeRefreshLayout.setOnRefreshListener(this::loadPage);
     }
 
-    private void loadWebPage() {
-        if(isConnected()) {
-            webView.loadUrl("https://anshumemorial.in");
+    private void loadPage(){
+
+        if (isConnected()){
+//            if internet available then show webView and hide noInternetLayout
             webView.setVisibility(View.VISIBLE);
             noInternetLayout.setVisibility(View.GONE);
+            if (webView.canGoBack()){
+//                if entered in another page then reload page
+                webView.reload();
+            } else {
+                webView.loadUrl("https://anshumemorial.in");
+            }
         }else{
+//            if internet is not connected then hide webView and show noInternetLayout
             webView.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
             horizontalProgressBar.setVisibility(View.GONE);
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.check_internet, Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Override
     public void onBackPressed(){

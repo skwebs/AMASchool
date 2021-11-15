@@ -21,6 +21,9 @@
         android:id="@+id/horizontal_progressbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:progressBackgroundTintMode="screen"
+        android:progressTint="@color/red"
+        android:paddingBottom="0dp"
         android:layout_marginTop="-7sp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
