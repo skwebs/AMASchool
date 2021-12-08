@@ -2,8 +2,11 @@ package com.anshumemorial.amaschool;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -21,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        register broadcastReceiver
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 //        variables assignment
         webView = findViewById(R.id.webView);
@@ -72,7 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
         swipeRefreshLayout.setOnRefreshListener(this::loadPage);
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //        unregister broadcastReceiver
+        unregisterReceiver(broadcastReceiver);
+    }
 
+    protected void showWebView(){
+        webView.setVisibility(View.VISIBLE);
+        noInternetLayout.setVisibility(View.GONE);
+    }
     private void loadPage(){
 
         if (isConnected()){
@@ -171,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
             swipeRefreshLayout.setRefreshing(false);
             super.onPageFinished(view, url);
         }
+
+
+
     }
 
     private class myWebChromeClient extends WebChromeClient {
@@ -183,6 +203,47 @@ public class MainActivity extends AppCompatActivity {
                 horizontalProgressBar.setVisibility(View.VISIBLE);
             }
         }
+
+        //  for javaScript Alert : get from -
+        //  https://stackoverflow.com/questions/38053779/android-webview-how-to-change-javascript-alert-title-text-in-android-webview
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result){
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Title")
+                    .setMessage(message)
+                    .setPositiveButton("OK", (DialogInterface dialog, int which) -> result.confirm())
+                    .setOnDismissListener((DialogInterface dialog) -> result.confirm())
+                    .create()
+                    .show();
+            return true;
+        }
+
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, JsResult result){
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Application says:")
+                    .setMessage(message)
+                    .setPositiveButton("OK", (DialogInterface dialog, int which) -> result.confirm())
+                    .setNegativeButton("Cancel", (DialogInterface dialog, int which) -> result.cancel())
+                    .setOnDismissListener((DialogInterface dialog) -> result.cancel())
+                    .create()
+                    .show();
+            return true;
+        }
+
     }
+
+    final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean status = isConnected();
+
+            if (status){
+//            if internet available then show webView and hide noInternetLayout
+                showWebView();
+            }//            if internet is not connected then hide webView and show noInternetLayout
+
+        }
+    };
 
 }
