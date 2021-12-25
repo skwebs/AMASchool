@@ -27,12 +27,12 @@
         android:layout_marginTop="-7sp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible"/>
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progressBar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:visibility="gone"/>-->
 
     <RelativeLayout
         android:id="@+id/no_internet_layout"

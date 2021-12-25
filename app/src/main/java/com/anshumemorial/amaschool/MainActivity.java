@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -33,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
 //    variables declaration
     private WebView webView;
-    private ProgressBar progressBar;
+//    private ProgressBar progressBar;
     private ProgressBar horizontalProgressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout noInternetLayout;
+    private boolean isWebViewLoaded;
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        variables assignment
         webView = findViewById(R.id.webView);
-        progressBar = findViewById(R.id.progressBar);
+//        progressBar = findViewById(R.id.progressBar);
         horizontalProgressBar = findViewById(R.id.horizontal_progressbar);
         horizontalProgressBar.setMax(100);
         swipeRefreshLayout = findViewById(R.id
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         noInternetLayout = findViewById(R.id.no_internet_layout);
 //        local variables declaration with assignment
         Button refreshBtn = findViewById(R.id.refresh_btn);
+        isWebViewLoaded = false;
 
 //        webView settings
         webView.setWebViewClient(new myWebViewClient());
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
 //            if internet is not connected then hide webView and show noInternetLayout
             webView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.GONE);
             horizontalProgressBar.setVisibility(View.GONE);
             noInternetLayout.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setRefreshing(false);
@@ -167,29 +168,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            super.onReceivedError(view, errorCode, description, failingUrl);
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            below code are not need because it handle by another place
-            progressBar.setVisibility(View.VISIBLE);
-            horizontalProgressBar.setVisibility(View.GONE);
-            swipeRefreshLayout.setRefreshing(true);
-            super.onPageStarted(view, url, favicon);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            progressBar.setVisibility(View.GONE);
-            horizontalProgressBar.setVisibility(View.GONE);
-            swipeRefreshLayout.setRefreshing(false);
-            super.onPageFinished(view, url);
-        }
-
-
 
     }
 
@@ -199,8 +177,11 @@ public class MainActivity extends AppCompatActivity {
             horizontalProgressBar.setProgress(newProgress);
             if(newProgress == 100){
                 horizontalProgressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+                isWebViewLoaded = true;
             }else {
                 horizontalProgressBar.setVisibility(View.VISIBLE);
+                isWebViewLoaded = false;
             }
         }
 
@@ -209,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result){
             new AlertDialog.Builder(view.getContext())
-                    .setTitle("Title")
+//                    .setTitle("Title")
                     .setMessage(message)
                     .setPositiveButton("OK", (DialogInterface dialog, int which) -> result.confirm())
                     .setOnDismissListener((DialogInterface dialog) -> result.confirm())
@@ -221,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onJsConfirm(WebView view, String url, String message, JsResult result){
             new AlertDialog.Builder(view.getContext())
-                    .setTitle("Application says:")
+//                    .setTitle("Application says:")
                     .setMessage(message)
                     .setPositiveButton("OK", (DialogInterface dialog, int which) -> result.confirm())
                     .setNegativeButton("Cancel", (DialogInterface dialog, int which) -> result.cancel())
@@ -236,13 +217,9 @@ public class MainActivity extends AppCompatActivity {
     final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean status = isConnected();
-
-            if (status){
-//            if internet available then show webView and hide noInternetLayout
-                showWebView();
-            }//            if internet is not connected then hide webView and show noInternetLayout
-
+//            if internet is available and webVew already loaded then only show webView
+//            else load webView
+            if (isConnected()) if (isWebViewLoaded) showWebView();else loadPage();
         }
     };
 
