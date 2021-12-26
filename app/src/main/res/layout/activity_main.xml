@@ -13,7 +13,8 @@
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -23,16 +24,9 @@
         android:layout_height="wrap_content"
         android:progressBackgroundTintMode="screen"
         android:progressTint="@color/red"
-        android:paddingBottom="0dp"
         android:layout_marginTop="-7sp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
-<!--    <ProgressBar-->
-<!--        android:id="@+id/progressBar"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        android:visibility="gone"/>-->
 
     <RelativeLayout
         android:id="@+id/no_internet_layout"
@@ -40,7 +34,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:visibility="gone">
+        android:gravity="center"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/noInternetLogo"
@@ -48,7 +43,6 @@
             android:layout_height="125dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="110pt"
             android:background="#FFFFFF"
             android:contentDescription="@string/no_internet"
             android:src="@drawable/wifi_off" />
@@ -69,15 +63,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
             android:text="@string/retry"
             android:textStyle="bold"
             tools:text="Retry" />
+        <Button
+            android:id="@+id/open_wifi_setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_wifi_setting"
+            android:layout_below="@+id/refresh_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+        <Button
+            android:id="@+id/open_mobile_data_setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_wifi_setting"
+            android:layout_below="@+id/open_wifi_setting_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -57,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
         noInternetLayout = findViewById(R.id.no_internet_layout);
 //        local variables declaration with assignment
         Button refreshBtn = findViewById(R.id.refresh_btn);
+//        assigned openWifiSetting button
+        Button openWifiSetting = (Button)findViewById(R.id.open_wifi_setting_btn);
+//        assigned openMobileDataSetting button
+        Button openMobileDataSetting = (Button)findViewById(R.id.open_mobile_data_setting_btn);
+//        open wifi setting
+        openWifiSetting.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
+//        open mobile data setting
+        openMobileDataSetting.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)));
         isWebViewLoaded = false;
 
 //        webView settings
