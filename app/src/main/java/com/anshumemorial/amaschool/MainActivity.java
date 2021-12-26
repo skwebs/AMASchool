@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        variables assignment
         webView = findViewById(R.id.webView);
-//        progressBar = findViewById(R.id.progressBar);
         horizontalProgressBar = findViewById(R.id.horizontal_progressbar);
         horizontalProgressBar.setMax(100);
         swipeRefreshLayout = findViewById(R.id
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
 //            if internet is not connected then hide webView and show noInternetLayout
             webView.setVisibility(View.GONE);
-//            progressBar.setVisibility(View.GONE);
             horizontalProgressBar.setVisibility(View.GONE);
             noInternetLayout.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setRefreshing(false);
@@ -129,8 +127,15 @@ public class MainActivity extends AppCompatActivity {
         if (webView.canGoBack()){
             webView.goBack();
         } else {
-            super.onBackPressed();
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",((dialog, which) -> MainActivity.super.onBackPressed()))
+                    .setNegativeButton("No",null)
+                    .show();
         }
+
+
     }
 
     public boolean isConnected(){
