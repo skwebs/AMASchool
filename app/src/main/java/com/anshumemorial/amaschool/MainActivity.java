@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        register broadcastReceiver
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
+//        String PACKAGE_NAME = getApplicationContext().getPackageName();
+//        used package_name as userAgent
+        String userAgent = getApplicationContext().getPackageName();
 //        variables assignment
         webView = findViewById(R.id.webView);
         horizontalProgressBar = findViewById(R.id.horizontal_progressbar);
@@ -58,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 //        local variables declaration with assignment
         Button refreshBtn = findViewById(R.id.refresh_btn);
 //        assigned openWifiSetting button
-        Button openWifiSetting = (Button)findViewById(R.id.open_wifi_setting_btn);
+        Button openWifiSetting = findViewById(R.id.open_wifi_setting_btn);
 //        assigned openMobileDataSetting button
-        Button openMobileDataSetting = (Button)findViewById(R.id.open_mobile_data_setting_btn);
+        Button openMobileDataSetting = findViewById(R.id.open_mobile_data_setting_btn);
 //        open wifi setting
         openWifiSetting.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
 //        open mobile data setting
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         settings.setUseWideViewPort(true);
         settings.setSaveFormData(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        set user agent
+        settings.setUserAgentString(userAgent);
 
         /* load web page function when app load */
         loadPage();
@@ -109,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
 //                if entered in another page then reload page
                 webView.reload();
             } else {
-                webView.loadUrl("https://anshumemorial.in");
+                webView.loadUrl("https://anshumemorial.in/android/");
+//                webView.loadUrl("https://v1.anshumemorial.in/?r=ua");
             }
         }else{
 //            if internet is not connected then hide webView and show noInternetLayout
@@ -120,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.check_internet, Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public void onBackPressed(){
@@ -134,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                     .setNegativeButton("No",null)
                     .show();
         }
-
-
     }
 
     public boolean isConnected(){
