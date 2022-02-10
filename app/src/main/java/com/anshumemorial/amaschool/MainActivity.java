@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 //    private ProgressBar progressBar;
     private ProgressBar horizontalProgressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private RelativeLayout noInternetLayout;
+    private RelativeLayout noInternetLayout, rlLoading;
     private boolean isWebViewLoaded;
 
 
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id
                 .swipeRefresh);
         noInternetLayout = findViewById(R.id.no_internet_layout);
+        rlLoading = findViewById(R.id.loading_layout);
+
 //        local variables declaration with assignment
         Button refreshBtn = findViewById(R.id.refresh_btn);
 //        assigned openWifiSetting button
@@ -113,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
 //                if entered in another page then reload page
                 webView.reload();
             } else {
-                webView.loadUrl("https://anshumemorial.in/android/");
-//                webView.loadUrl("https://v1.anshumemorial.in/?r=ua");
+//                webView.loadUrl("https://anshumemorial.in/android/");
+                webView.loadUrl("https://v1.anshumemorial.in");
             }
         }else{
 //            if internet is not connected then hide webView and show noInternetLayout
@@ -194,9 +196,11 @@ public class MainActivity extends AppCompatActivity {
             if(newProgress == 100){
                 horizontalProgressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
+                rlLoading.setVisibility(View.GONE);
                 isWebViewLoaded = true;
             }else {
                 horizontalProgressBar.setVisibility(View.VISIBLE);
+//                rlLoading.setVisibility(View.VISIBLE);
                 isWebViewLoaded = false;
             }
         }
