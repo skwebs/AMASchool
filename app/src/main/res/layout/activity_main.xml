@@ -56,11 +56,12 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:visibility="visible"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/blue_700"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:background="@color/blue_700">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,7 +81,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/noInternetLogo"
@@ -113,21 +114,22 @@
             android:textStyle="bold"
             tools:text="Retry" />
         <Button
-            android:id="@+id/open_wifi_setting_btn"
+            android:id="@+id/open_mobile_data_setting_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/open_wifi_setting"
+            android:text="@string/open_mobile_data_setting"
             android:layout_below="@+id/refresh_btn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"/>
         <Button
-            android:id="@+id/open_mobile_data_setting_btn"
+            android:id="@+id/open_wifi_setting_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/open_wifi_setting"
-            android:layout_below="@+id/open_wifi_setting_btn"
+            android:layout_below="@+id/open_mobile_data_setting_btn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"/>
+
     </RelativeLayout>
 
 </RelativeLayout>

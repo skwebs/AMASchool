@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 webView.reload();
             } else {
 //                webView.loadUrl("https://anshumemorial.in/android/");
-                webView.loadUrl("https://v1.anshumemorial.in");
+                String appUrl = "https://anshumemorial.in/";
+                webView.loadUrl(appUrl);
             }
         }else{
 //            if internet is not connected then hide webView and show noInternetLayout
