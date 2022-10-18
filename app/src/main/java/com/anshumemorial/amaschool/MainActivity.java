@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setSaveFormData(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
 //        set user agent
-        settings.setUserAgentString(userAgent);
+//        settings.setUserAgentString(userAgent);
 
         /* load web page function when app load */
         loadPage();

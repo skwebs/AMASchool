@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:progressBackgroundTintMode="screen"
         android:progressTint="@color/red"
-        android:layout_marginTop="-7sp"
+        android:layout_marginTop="-7.5sp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
     <RelativeLayout
         android:id="@+id/loading_layout"
