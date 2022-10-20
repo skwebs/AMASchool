@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        register broadcastReceiver
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-//        String PACKAGE_NAME = getApplicationContext().getPackageName();
-//        used package_name as userAgent
-        String userAgent = getApplicationContext().getPackageName();
+
 //        variables assignment
         webView = findViewById(R.id.webView);
         horizontalProgressBar = findViewById(R.id.horizontal_progressbar);
@@ -84,8 +82,13 @@ public class MainActivity extends AppCompatActivity {
         settings.setUseWideViewPort(true);
         settings.setSaveFormData(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        get App Default UserAgent
+        String ua = settings.getUserAgentString();
+//        append app package name in UserAgent
+        String custom_ua = ua+"|"+getApplicationContext().getPackageName();
 //        set user agent
-//        settings.setUserAgentString(userAgent);
+        settings.setUserAgentString(custom_ua);
+
 
         /* load web page function when app load */
         loadPage();
