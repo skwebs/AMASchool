@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setAllowFileAccess(true);
-        settings.setAppCacheEnabled(true);
+//        settings.setAppCacheEnabled(true);
 //         Improve loading speed
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setUseWideViewPort(true);
