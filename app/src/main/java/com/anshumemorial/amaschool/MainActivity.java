@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.webkit.JsResult;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout noInternetLayout, rlLoading;
     private boolean isWebViewLoaded;
+    private boolean isAppOpened;
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 //        open mobile data setting
         openMobileDataSetting.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)));
         isWebViewLoaded = false;
+        isAppOpened = false;
 
 //        webView settings
         webView.setWebViewClient(new myWebViewClient());
@@ -96,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
         refreshBtn.setOnClickListener(v -> loadPage());
 
         swipeRefreshLayout.setOnRefreshListener(this::loadPage);
+        Toast.makeText(this, "This is showing only once.", Toast.LENGTH_SHORT).show();
+//        If internet is not connected
+        if (!isConnected()){
+            new Handler().postDelayed(() ->{
+                rlLoading.setVisibility(View.GONE);
+                isAppOpened = true;
+            } , 3000);
+        }
     }
     @Override
     protected void onDestroy() {
@@ -121,14 +132,16 @@ public class MainActivity extends AppCompatActivity {
 //                webView.loadUrl("https://anshumemorial.in/android/");
                 String appUrl = "https://anshumemorial.in/";
                 webView.loadUrl(appUrl);
-            }
+            }// isConnected() condition end here
         }else{
 //            if internet is not connected then hide webView and show noInternetLayout
             webView.setVisibility(View.GONE);
             horizontalProgressBar.setVisibility(View.GONE);
-            noInternetLayout.setVisibility(View.VISIBLE);
             swipeRefreshLayout.setRefreshing(false);
             Toast.makeText(this, R.string.check_internet, Toast.LENGTH_SHORT).show();
+            if (isAppOpened){
+                noInternetLayout.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -197,15 +210,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             horizontalProgressBar.setProgress(newProgress);
-            if(newProgress == 100){
-                horizontalProgressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-                rlLoading.setVisibility(View.GONE);
-                isWebViewLoaded = true;
-            }else {
-                horizontalProgressBar.setVisibility(View.VISIBLE);
+            if (isConnected()){
+                if(newProgress == 100){
+                    horizontalProgressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
+                    rlLoading.setVisibility(View.GONE);
+                    isWebViewLoaded = true;
+                    isAppOpened = true;
+                }else {
+                    horizontalProgressBar.setVisibility(View.VISIBLE);
 //                rlLoading.setVisibility(View.VISIBLE);
-                isWebViewLoaded = false;
+                    isWebViewLoaded = false;
+                }
             }
         }
 
