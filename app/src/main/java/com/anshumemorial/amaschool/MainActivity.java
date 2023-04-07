@@ -1,6 +1,5 @@
 package com.anshumemorial.amaschool;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isAppOpened;
 
 
-    @SuppressLint("SetJavaScriptEnabled")
+//    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
